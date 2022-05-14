@@ -1,6 +1,8 @@
 import React from 'react';
 import { format } from 'date-fns';
-const BookingModal = ({ treatment,date }) => {
+
+
+const BookingModal = ({ treatment, date }) => {
     const { name, slots } = treatment;
 
     return (
@@ -12,12 +14,17 @@ const BookingModal = ({ treatment,date }) => {
                     <h3 class="font-bold text-lg text-secondary text-center">Booking for {name}</h3>
 
                     <form className='grid grid-cols-1 gap-4 justify-items-center'>
-                    <input type="text" value={format(date, 'PP')} disabled class="input input-bordered w-full max-w-xs" />
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                    <input type="submit" value="submit" class="btn w-ful btn-warning" />
+                        <input type="text" value={format(date, 'PP')} disabled class="input input-bordered w-full max-w-xs" />
+                        <select name='slots' class="select select-secondary w-full max-w-xs">
+                        <option disabled selected>Pick your Ideal Slots</option>
+                            {
+                                slots.map(slot=><option value={slot}>{slot}</option>)
+                            }
+                        </select>
+                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                        <input type="submit" value="submit" class="btn w-ful btn-warning" />
                     </form>
 
                     <div class="modal-action">
