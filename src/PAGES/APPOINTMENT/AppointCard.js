@@ -12,7 +12,7 @@ const AppointCard = ({ appoint, setTreatment}) => {
                 <p> <span className='stat-value text-primary'>{slots.length}</span> {slots.length > 1 ? 'Spaces ' : 'Space'} available</p>
                 <div className="card-actions justify-center">
                 <label for="booking-modal" disabled={slots.length === 0}
-                     onClick={()=>setTreatment(appoint)} className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">Book Appointment</label>
+                     onClick={()=>setTreatment(appoint)} className="btn btn-sm text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">Book Appointment</label>
                 </div>
             </div>
         </div>

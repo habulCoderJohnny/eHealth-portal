@@ -9,6 +9,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
         event.preventDefault();
         const slot = event.target.slot.value;
         console.log(slot);
+        //FOR CLOSE THE MODAL
         setTreatment(null)
 
     }
@@ -26,7 +27,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                         <select name='slot' class="select select-secondary w-full max-w-xs">
                         <option disabled selected>Pick your Ideal Slots</option>
                             {
-                                slots.map(slot=><option value={slot}>{slot}</option>)
+                                slots.map(slot=><option key={slot._id} value={slot}>{slot}</option>)
                             }
                         </select>
                         <input type="text" name='name' placeholder="Your name" class="input input-bordered w-full max-w-xs" />
