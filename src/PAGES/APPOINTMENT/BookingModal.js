@@ -1,6 +1,6 @@
 import React from 'react';
-
-const BookingModal = ({ treatment }) => {
+import { format } from 'date-fns';
+const BookingModal = ({ treatment,date }) => {
     const { name, slots } = treatment;
 
     return (
@@ -10,6 +10,15 @@ const BookingModal = ({ treatment }) => {
                 <div class="modal-box">
                     <label for="booking-modal" class="btn btn-warning btn-sm btn-circle absolute right-8 top-5">✕</label>
                     <h3 class="font-bold text-lg text-secondary text-center">Booking for {name}</h3>
+
+                    <form className='grid grid-cols-1 gap-4 justify-items-center'>
+                    <input type="text" value={format(date, 'PP')} disabled class="input input-bordered w-full max-w-xs" />
+                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                    <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                    <input type="submit" value="submit" class="btn w-ful btn-warning" />
+                    </form>
 
                     <div class="modal-action">
                         <label for="booking-modal" class="btn btn-ghost">Done</label>
