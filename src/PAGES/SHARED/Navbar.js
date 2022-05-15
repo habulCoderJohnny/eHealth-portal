@@ -1,9 +1,9 @@
-import { signOut } from 'firebase/auth';
+import {signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
-import Loading from './Loading/Loading';
+
 
 const Navbar = () => {
     const [user, loading] = useAuthState(auth);
@@ -13,9 +13,12 @@ const Navbar = () => {
     // }
 
     const logout = () => {
+        const confirm = window.confirm('Are you sure to logout?');
+        if (confirm) {
         signOut(auth);
       };
-      
+
+    }
     const menuItems = 
     <>
         <li><Link to="/home">Home</Link></li>

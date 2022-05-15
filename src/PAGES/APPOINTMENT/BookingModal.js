@@ -11,7 +11,8 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
     const handleBooking = event=>{
         event.preventDefault();
         const slot = event.target.slot.value;
-        console.log(slot);
+        const age = event.target.age.value;
+        console.log(slot, age);
         //FOR CLOSE THE MODAL
         setTreatment(null)
 
@@ -37,6 +38,9 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                         disabled type="text" name='name' class="input input-bordered w-full max-w-xs" />
                         <input value={user?.email} disabled  type="email" name='email' class="input input-bordered w-full max-w-xs" />
                         <input type="text" name='phone' placeholder="Current Phone Number" class="input input-bordered w-full max-w-xs" />
+                        <label>Your up-to-date Age </label>
+                        <input type="number" name='age'
+                        id='age' placeholder="Age" class="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="submit" class="btn w-ful btn-warning" />
                     </form>
                 </div>
@@ -46,3 +50,5 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
 };
 
 export default BookingModal;
+
+
