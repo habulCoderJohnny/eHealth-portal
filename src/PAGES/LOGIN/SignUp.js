@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
 import HelloUser from '../SHARED/HelloUser';
+import ErrorMassage from '../SHARED/ErrorMassage';
 
 
 const SignUp = () => {
@@ -33,12 +34,9 @@ const SignUp = () => {
     }
 
     if (error || gError || updateError) {
-        signInError = <div class="bg-orange-100 border-l-4 rounded border-orange-500 text-orange-700 p-4" role="alert">
-        <p class="font-bold text-red-500">Error</p>
-        <p>{error?.message || gError?.message || updateError.message}</p>
-      </div>
-
+        signInError = <ErrorMassage>{error?.message || gError?.message || updateError.message}</ErrorMassage>
     }
+    
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
@@ -61,7 +59,7 @@ const SignUp = () => {
                 <div class="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control">
-                            <label class="label ">
+                            <label class="label p-0">
                                 <span class="label-text text-xl">Name</span>
                             </label>
 
@@ -74,7 +72,7 @@ const SignUp = () => {
                             })} />
 
 
-                            <label className="label">
+                            <label className="label p-1">
                                 {errors.name?.type === 'required' && <span className="label-text-alt text-red-500">{errors.name.message}</span>}
                             </label>
                         </div>
@@ -82,7 +80,7 @@ const SignUp = () => {
 
 
                         <div class="form-control">
-                            <label class="label ">
+                            <label class="label p-1">
                                 <span class="label-text text-xl">Email</span>
                             </label>
 
@@ -98,7 +96,7 @@ const SignUp = () => {
                             })} />
 
 
-                            <label className="label">
+                            <label className="label p-1">
                                 {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
                                 {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
                             </label>
@@ -106,7 +104,7 @@ const SignUp = () => {
 
 
                         <div class="form-control">
-                            <label class="label">
+                            <label class="label p-0">
                                 <span class="label-text text-xl">Password</span>
                             </label>
 
@@ -147,3 +145,5 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+

@@ -5,6 +5,7 @@ import auth from '../../firebase.init';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
+import ErrorMassages from '../SHARED/ErrorMassages';
 
 
 const Login = () => {
@@ -38,11 +39,8 @@ const Login = () => {
     }
 
     if (error || gError) {
-        signInError = <div class="bg-red-200 border-l-4 rounded border-orange-500 text-orange-700 p-4" role="alert">
-        <p class="font-bold text-red-500">Error</p>
-        <p>{error?.message || gError?.message }</p>
-      </div>
-
+        signInError = <ErrorMassages>{error?.message || gError?.message }</ErrorMassages>
+    
     }
 
     const onSubmit = data => {
@@ -61,7 +59,7 @@ const Login = () => {
                 <div class="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control">
-                            <label class="label ">
+                            <label class="label p-1">
                                 <span class="label-text text-xl">Email</span>
                             </label>
 
@@ -77,7 +75,7 @@ const Login = () => {
                             })} />
 
 
-                            <label className="label">
+                            <label className="label p-1">
                                 {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
                                 {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
                             </label>
@@ -127,6 +125,7 @@ const Login = () => {
                 </div>
 
             </div>
+            
         </div>
 
     );
