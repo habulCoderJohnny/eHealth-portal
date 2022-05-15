@@ -1,6 +1,18 @@
 import React from 'react';
 import loginbg from '../../assets/images/login.png';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import { useNavigate } from 'react-router-dom';
+
+
 const Login = () => {
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const navigate = useNavigate();
+    console.log(user);
+    if (user) {
+        navigate('/home');
+    }
+
     return (
         <div class="hero min-h-screen" style={{background: `url(${loginbg})`, backgroundSize:'cover'}}>
             <div class="hero-overlay bg-opacity-40"></div>
@@ -44,7 +56,12 @@ const Login = () => {
                             <div class="form-control mt-6">
                                 <button class="btn btn-primary">Login</button>
                             </div>
+
+                            <div class="divider">OR</div>
+
+                        <button onClick={()=>signInWithGoogle()}  class="btn btn-outline">continue with google</button>
                         </div>
+                     
                 </div>
         </div>
 
