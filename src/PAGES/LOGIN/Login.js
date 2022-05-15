@@ -7,8 +7,6 @@ import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
 
 
-
-
 const Login = () => {
 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -27,9 +25,9 @@ const Login = () => {
 
     let signInError;
 
-    // if (loading || gLoading) {
-    //     return <p>Loading.....</p>
-    // }
+    if ( gLoading) {
+        return <Loading></Loading>
+    }
 
     if (error || gError) {
         signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>

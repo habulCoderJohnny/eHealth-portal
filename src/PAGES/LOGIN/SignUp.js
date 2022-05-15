@@ -28,9 +28,9 @@ const SignUp = () => {
 
     let signInError;
 
-    // if (loading || gLoading || updating) {
-    //     return <p>Loading.....</p>
-    // }
+    if ( gLoading || updating) {
+        return <Loading></Loading>
+    }
 
     if (error || gError || updateError) {
         signInError = <p className='text-red-500'>{error?.message || gError?.message | updateError.message}</p>
