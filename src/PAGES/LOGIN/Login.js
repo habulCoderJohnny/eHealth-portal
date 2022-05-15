@@ -4,6 +4,7 @@ import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-fireba
 import auth from '../../firebase.init';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import Loading from '../SHARED/Loading/Loading';
 
 
 
@@ -16,7 +17,7 @@ const Login = () => {
         user,
         loading,
         error,
-      ] = useSignInWithEmailAndPassword(auth);
+    ] = useSignInWithEmailAndPassword(auth);
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
@@ -25,15 +26,15 @@ const Login = () => {
 
     let signInError;
 
-    if (loading || gLoading) {
-        return <p>Loading.....</p>
-    }
+    // if (loading || gLoading) {
+    //     return <p>Loading.....</p>
+    // }
 
     if (error || gError) {
-        signInError = <p className='text-red-500'>{error?.message || gError?.message }</p>
+        signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>
     }
 
-    if (gUser) {
+    if (  user || gUser ) {
         navigate('/home');
     }
 
@@ -58,15 +59,15 @@ const Login = () => {
                             </label>
 
                             <input type="email" placeholder="email" class="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
-                                    required: {
-                                        value: true,
-                                        message: 'Email is Required'
-                                    },
-                                    pattern: {
-                                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                        message: 'Provide a valid Email'
-                                    }
-                                })}/>
+                                required: {
+                                    value: true,
+                                    message: 'Email is Required'
+                                },
+                                pattern: {
+                                    value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                    message: 'Provide a valid Email'
+                                }
+                            })} />
 
 
                             <label className="label">
@@ -82,28 +83,30 @@ const Login = () => {
                             </label>
 
                             <input type="password" placeholder="password" class="input input-bordered input-secondary text-xl text-blue-400" {...register("password", {
-                                    required: {
-                                        value: true,
-                                        message: 'Password is Required'
-                                    },
-                                    minLength: {
-                                        value: 6,
-                                        message: 'Must be 6 characters or longer'
-                                    }
-                                })}/>
+                                required: {
+                                    value: true,
+                                    message: 'Password is Required'
+                                },
+                                minLength: {
+                                    value: 6,
+                                    message: 'Must be 6 characters or longer'
+                                }
+                            })} />
 
 
                             <label class="label">
-                            {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
+                                {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                             </label>
-                            </div>
+                        </div>
 
 
-                            <label class="label">
-                                <button href=".." class="label-text-alt link link-hover link-white">Forgot password?</button>
-                            </label>
-                            {signInError}
+                        <label class="label">
+                            <button href=".." class="label-text-alt link link-hover link-white">Forgot password?</button>
+                        </label>
+
+                        {signInError}
+                        { gLoading &&  <Loading></Loading>}
 
                         <div class="form-control">
                             <input type="submit" value="Login" class="btn btn-primary text-white" />
