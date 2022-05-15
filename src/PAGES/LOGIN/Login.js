@@ -1,6 +1,6 @@
 import React from 'react';
 import loginBg from '../../assets/images/login.png';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -8,17 +8,38 @@ import { useForm } from "react-hook-form";
 
 
 const Login = () => {
+
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
+
     const { register, formState: { errors }, handleSubmit } = useForm();
+
     const navigate = useNavigate();
     // console.log(user);
+
+    let signInError;
+
+    if (loading || gLoading) {
+        return <p>Loading.....</p>
+    }
+
+    if (error || gError) {
+        signInError = <p className='text-red-500'>{error?.message || gError?.message }</p>
+    }
+
     if (gUser) {
         navigate('/home');
     }
 
     const onSubmit = data => {
         console.log(data);
-        
+        signInWithEmailAndPassword(data.email, data.password);
     }
 
     return (
@@ -82,6 +103,7 @@ const Login = () => {
                             <label class="label">
                                 <button href=".." class="label-text-alt link link-hover link-white">Forgot password?</button>
                             </label>
+                            {signInError}
 
                         <div class="form-control">
                             <input type="submit" value="Login" class="btn btn-primary text-white" />
