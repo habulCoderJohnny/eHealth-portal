@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import loginBg from '../../assets/images/login.png';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
@@ -24,15 +24,16 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location?.state?.from?.pathname || '/';
-
     // console.log(user);
 
     let signInError;
 
-    if (  user || gUser ) {
-        navigate(from, {replace:true});
-        // navigate('/home');
-    }
+    useEffect( () =>{
+        if (user || gUser) {
+            navigate(from, { replace: true });
+        }
+    }, [user, gUser, from, navigate]);
+    
 
     if ( gLoading) {
         return <Loading></Loading>
@@ -49,21 +50,21 @@ const Login = () => {
     }
 
     return (
-        <div class="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
-            <div class="hero-overlay bg-opacity-10"></div>
+        <div className="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
+            <div className="hero-overlay bg-opacity-10"></div>
 
-            <div class="card w-full max-w-lg shadow-2xl">
-                <div class="text-center">
-                    <h1 class="text-white text-5xl font-bold ">Login now!</h1>
+            <div className="card w-full max-w-lg shadow-2xl">
+                <div className="text-center">
+                    <h1 className="text-white text-5xl font-bold ">Login now!</h1>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="form-control">
-                            <label class="label p-1">
-                                <span class="label-text text-xl">Email</span>
+                        <div className="form-control">
+                            <label className="label p-1">
+                                <span className="label-text text-xl">Email</span>
                             </label>
 
-                            <input type="email" placeholder="email" class="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
+                            <input type="email" placeholder="email" className="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
                                 required: {
                                     value: true,
                                     message: 'Email is Required'
@@ -82,12 +83,12 @@ const Login = () => {
                         </div>
 
 
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="label-text text-xl">Password</span>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text text-xl">Password</span>
                             </label>
 
-                            <input type="password" placeholder="password" class="input input-bordered input-secondary text-xl text-blue-400" {...register("password", {
+                            <input type="password" placeholder="password" className="input input-bordered input-secondary text-xl text-blue-400" {...register("password", {
                                 required: {
                                     value: true,
                                     message: 'Password is Required'
@@ -99,29 +100,29 @@ const Login = () => {
                             })} />
 
 
-                            <label class="label">
+                            <label className="label">
                                 {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                             </label>
                         </div>
 
 
-                        <label class="label">
-                            <button href=".." class="label-text-alt link link-hover link-white">Forgot password?</button>
+                        <label className="label">
+                            <button href=".." className="label-text-alt link link-hover link-white">Forgot password?</button>
                         </label>
 
                         {signInError} 
                         { loading && <Loading></Loading>}
 
-                        <div class="form-control">
-                            <input type="submit" value="Login" class="btn btn-primary text-white" />
+                        <div className="form-control">
+                            <input type="submit" value="Login" className="btn btn-primary text-white" />
                         </div>
                     </form>
                     <p><small>New to Doctors Portal? <Link className=' hover:underline font-bold' to="/signup">Create New Account</Link></small></p>
 
-                    <div class="divider">OR</div>
+                    <div className="divider">OR</div>
 
-                    <button onClick={() => signInWithGoogle()} class="btn btn-outline">continue with google</button>
+                    <button onClick={() => signInWithGoogle()} className="btn btn-outline">continue with google</button>
                 </div>
 
             </div>

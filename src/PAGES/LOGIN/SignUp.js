@@ -49,21 +49,21 @@ const SignUp = () => {
     }
 
     return (
-        <div class="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
-            <div class="hero-overlay bg-opacity-10"></div>
+        <div className="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
+            <div className="hero-overlay bg-opacity-10"></div>
 
-            <div class="card w-full max-w-lg shadow-2xl">
-                <div class="text-center">
-                    <h1 class="text-white text-5xl font-bold ">Sign Up now!</h1>
+            <div className="card w-full max-w-lg shadow-2xl">
+                <div className="text-center">
+                    <h1 className="text-white text-5xl font-bold ">Sign Up now!</h1>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="form-control">
-                            <label class="label p-0">
-                                <span class="label-text text-xl">Name</span>
+                        <div className="form-control">
+                            <label className="label p-0">
+                                <span className="label-text text-xl">Name</span>
                             </label>
 
-                            <input type="text" placeholder="Name" class="input input-bordered input-secondary border-emerald-500  text-xl text-blue-400
+                            <input type="text" placeholder="Name" className="input input-bordered input-secondary border-emerald-500  text-xl text-blue-400
                             "  {...register("name", {
                                 required: {
                                     value: true,
@@ -79,12 +79,12 @@ const SignUp = () => {
 
 
 
-                        <div class="form-control">
-                            <label class="label p-1">
-                                <span class="label-text text-xl">Email</span>
+                        <div className="form-control">
+                            <label className="label p-1">
+                                <span className="label-text text-xl">Email</span>
                             </label>
 
-                            <input type="email" placeholder="email" class="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
+                            <input type="email" placeholder="email" className="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
                                 required: {
                                     value: true,
                                     message: 'Email is Required'
@@ -103,12 +103,12 @@ const SignUp = () => {
                         </div>
 
 
-                        <div class="form-control">
-                            <label class="label p-0">
-                                <span class="label-text text-xl">Password</span>
+                        <div className="form-control">
+                            <label className="label p-0">
+                                <span className="label-text text-xl">Password</span>
                             </label>
 
-                            <input type="password" placeholder="password" class="input input-bordered input-secondary  border-red-500 text-xl text-blue-400" {...register("password", {
+                            <input type="password" placeholder="password" className="input input-bordered input-secondary  border-red-500 text-xl text-blue-400" {...register("password", {
                                 required: {
                                     value: true,
                                     message: 'Password is Required'
@@ -119,7 +119,7 @@ const SignUp = () => {
                                 }
                             })} />
 
-                            <label class="label">
+                            <label className="label">
                                 {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                             </label>
@@ -128,15 +128,15 @@ const SignUp = () => {
                         {signInError}
                         {loading && <Loading></Loading>}
 
-                        <div class="form-control">
-                            <input type="submit" value="Signup" class="btn btn-primary text-white" />
+                        <div className="form-control">
+                            <input type="submit" value="Signup" className="btn btn-primary text-white" />
                         </div>
                     </form>
                     <p><small>New to Doctors Portal? <Link className=' hover:underline font-bold' to="/login">Already Have an Account?</Link></small></p>
 
-                    <div class="divider">OR</div>
+                    <div className="divider">OR</div>
 
-                    <button onClick={() => signInWithGoogle()} class="btn btn-outline">continue with google</button>
+                    <button onClick={() => signInWithGoogle()} className="btn btn-outline">continue with google</button>
                 </div>
 
             </div>
