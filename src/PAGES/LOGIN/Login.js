@@ -27,7 +27,7 @@ const Login = () => {
     // console.log(user);
 
     let signInError;
-    
+
     if (  user || gUser ) {
         navigate(from, {replace:true});
         // navigate('/home');
@@ -38,7 +38,11 @@ const Login = () => {
     }
 
     if (error || gError) {
-        signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>
+        signInError = <div class="bg-red-200 border-l-4 rounded border-orange-500 text-orange-700 p-4" role="alert">
+        <p class="font-bold text-red-500">Error</p>
+        <p>{error?.message || gError?.message }</p>
+      </div>
+
     }
 
     const onSubmit = data => {

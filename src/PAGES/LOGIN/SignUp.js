@@ -28,25 +28,28 @@ const SignUp = () => {
 
     let signInError;
 
-    if ( gLoading || updating) {
+    if (gLoading || updating) {
         return <Loading></Loading>
     }
 
     if (error || gError || updateError) {
-        signInError = <p className='text-red-500'>{error?.message || gError?.message | updateError.message}</p>
-    }
+        signInError = <div class="bg-orange-100 border-l-4 rounded border-orange-500 text-orange-700 p-4" role="alert">
+        <p class="font-bold text-red-500">Error</p>
+        <p>{error?.message || gError?.message || updateError.message}</p>
+      </div>
 
+    }
     const onSubmit = async data => {
-        await createUserWithEmailAndPassword( data.email, data.password);
-        await updateProfile({displayName: data.name});
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
         console.log('user updated');
         navigate('/appointment');
     }
 
-    if (user || gUser ) {
+    if (user || gUser) {
         return <HelloUser></HelloUser>;
-     }
-     
+    }
+
     return (
         <div class="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
             <div class="hero-overlay bg-opacity-10"></div>
@@ -62,7 +65,8 @@ const SignUp = () => {
                                 <span class="label-text text-xl">Name</span>
                             </label>
 
-                            <input type="text" placeholder="Name" class="input input-bordered input-secondary text-xl text-blue-400"  {...register("name", {
+                            <input type="text" placeholder="Name" class="input input-bordered input-secondary border-emerald-500  text-xl text-blue-400
+                            "  {...register("name", {
                                 required: {
                                     value: true,
                                     message: 'Name is Required'
@@ -106,7 +110,7 @@ const SignUp = () => {
                                 <span class="label-text text-xl">Password</span>
                             </label>
 
-                            <input type="password" placeholder="password" class="input input-bordered input-secondary text-xl text-blue-400" {...register("password", {
+                            <input type="password" placeholder="password" class="input input-bordered input-secondary  border-red-500 text-xl text-blue-400" {...register("password", {
                                 required: {
                                     value: true,
                                     message: 'Password is Required'
@@ -124,7 +128,7 @@ const SignUp = () => {
                         </div>
 
                         {signInError}
-                        { loading && <Loading></Loading>}
+                        {loading && <Loading></Loading>}
 
                         <div class="form-control">
                             <input type="submit" value="Signup" class="btn btn-primary text-white" />
