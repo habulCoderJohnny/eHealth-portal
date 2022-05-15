@@ -1,10 +1,12 @@
 import React from 'react';
 import loginBg from '../../assets/images/login.png';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
+import HelloUser from '../SHARED/HelloUser';
+
 
 const SignUp = () => {
 
@@ -17,6 +19,7 @@ const SignUp = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
@@ -25,23 +28,25 @@ const SignUp = () => {
 
     let signInError;
 
-    // if (loading || gLoading) {
+    // if (loading || gLoading || updating) {
     //     return <p>Loading.....</p>
     // }
 
-    if (error || gError) {
-        signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>
+    if (error || gError || updateError) {
+        signInError = <p className='text-red-500'>{error?.message || gError?.message | updateError.message}</p>
     }
 
-    if (  user || gUser ) {
-        navigate('/home');
+    const onSubmit = async data => {
+        await createUserWithEmailAndPassword( data.email, data.password);
+        await updateProfile({displayName: data.name});
+        console.log('user updated');
+        navigate('/appointment');
     }
 
-    const onSubmit = data => {
-        console.log(data);
-        createUserWithEmailAndPassword( data.email, data.password);
-    }
-
+    if (user || gUser ) {
+        return <HelloUser></HelloUser>;
+     }
+     
     return (
         <div class="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
             <div class="hero-overlay bg-opacity-10"></div>
