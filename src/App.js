@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./PAGES/HOME/Home";
 import Navbar from "./PAGES/SHARED/Navbar";
 import About from "./PAGES/About";
-import Login from "./PAGES/Login";
+import Login from "./PAGES/LOGIN/Login";
 import Appointment from "./PAGES/APPOINTMENT/Appointment";
+
 
 function App() {
   return (
