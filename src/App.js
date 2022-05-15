@@ -5,6 +5,7 @@ import About from "./PAGES/About";
 import Login from "./PAGES/LOGIN/Login";
 import Appointment from "./PAGES/APPOINTMENT/Appointment";
 import SignUp from "./PAGES/LOGIN/SignUp";
+import RequireAuth from "./PAGES/LOGIN/RequireAuth";
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/home" element={<Home />}></Route>
-        <Route path="/appointment" element={<Appointment/>}></Route>
+        <Route path="/appointment" element={<RequireAuth><Appointment/></RequireAuth>}>
+        </Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp/>}></Route>

@@ -2,7 +2,7 @@ import React from 'react';
 import loginBg from '../../assets/images/login.png';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
 
@@ -21,9 +21,17 @@ const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
+
     // console.log(user);
 
     let signInError;
+    
+    if (  user || gUser ) {
+        navigate(from, {replace:true});
+        // navigate('/home');
+    }
 
     if ( gLoading) {
         return <Loading></Loading>
@@ -31,10 +39,6 @@ const Login = () => {
 
     if (error || gError) {
         signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>
-    }
-
-    if (  user || gUser ) {
-        navigate('/home');
     }
 
     const onSubmit = data => {

@@ -8,9 +8,9 @@ import Loading from './Loading/Loading';
 const Navbar = () => {
     const [user, loading] = useAuthState(auth);
 
-    if (loading) {
-        return <Loading></Loading>;
-    }
+    // if (loading) {
+    //     return <Loading></Loading>;
+    // }
 
     const logout = () => {
         signOut(auth);
