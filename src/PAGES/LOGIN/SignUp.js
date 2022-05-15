@@ -1,23 +1,22 @@
 import React from 'react';
 import loginBg from '../../assets/images/login.png';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
 
-
-
-const Login = () => {
+const SignUp = () => {
 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth);
+
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
@@ -40,7 +39,7 @@ const Login = () => {
 
     const onSubmit = data => {
         console.log(data);
-        signInWithEmailAndPassword(data.email, data.password);
+        createUserWithEmailAndPassword( data.email, data.password);
     }
 
     return (
@@ -49,10 +48,30 @@ const Login = () => {
 
             <div class="card w-full max-w-lg shadow-2xl">
                 <div class="text-center">
-                    <h1 class="text-white text-5xl font-bold ">Login now!</h1>
+                    <h1 class="text-white text-5xl font-bold ">Sign Up now!</h1>
                 </div>
                 <div class="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
+                        <div class="form-control">
+                            <label class="label ">
+                                <span class="label-text text-xl">Name</span>
+                            </label>
+
+                            <input type="text" placeholder="Name" class="input input-bordered input-secondary text-xl text-blue-400"  {...register("name", {
+                                required: {
+                                    value: true,
+                                    message: 'Name is Required'
+                                }
+                            })} />
+
+
+                            <label className="label">
+                                {errors.name?.type === 'required' && <span className="label-text-alt text-red-500">{errors.name.message}</span>}
+                            </label>
+                        </div>
+
+
+
                         <div class="form-control">
                             <label class="label ">
                                 <span class="label-text text-xl">Email</span>
@@ -93,26 +112,20 @@ const Login = () => {
                                 }
                             })} />
 
-
                             <label class="label">
                                 {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                             </label>
                         </div>
 
-
-                        <label class="label">
-                            <button href=".." class="label-text-alt link link-hover link-white">Forgot password?</button>
-                        </label>
-
-                        {signInError} 
+                        {signInError}
                         { loading && <Loading></Loading>}
 
                         <div class="form-control">
-                            <input type="submit" value="Login" class="btn btn-primary text-white" />
+                            <input type="submit" value="Signup" class="btn btn-primary text-white" />
                         </div>
                     </form>
-                    <p><small>New to Doctors Portal? <Link className=' hover:underline font-bold' to="/signup">Create New Account</Link></small></p>
+                    <p><small>New to Doctors Portal? <Link className=' hover:underline font-bold' to="/login">Already Have an Account?</Link></small></p>
 
                     <div class="divider">OR</div>
 
@@ -121,28 +134,7 @@ const Login = () => {
 
             </div>
         </div>
-
     );
 };
 
-export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default SignUp;
