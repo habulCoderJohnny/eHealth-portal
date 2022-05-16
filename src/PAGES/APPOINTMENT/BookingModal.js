@@ -6,13 +6,24 @@ import auth from '../../firebase.init';
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
     const { _id, name, slots } = treatment;
-    const [user, loading] = useAuthState(auth)
+    const [user, loading] = useAuthState(auth);
+    const formattedDate = format(date, 'PP');
 
     const handleBooking = event=>{
         event.preventDefault();
         const slot = event.target.slot.value;
         const age = event.target.age.value;
         console.log(slot, age);
+        const booking = {
+            treatmentId:_id,
+            treatment: name,
+            date: formattedDate,
+            slot,
+            patientEmail: user.email,
+            patientName: user.displayName,
+            phone: event.target.phone.value,
+            age: event.target.age.value
+        }
         //FOR CLOSE THE MODAL
         setTreatment(null)
 
