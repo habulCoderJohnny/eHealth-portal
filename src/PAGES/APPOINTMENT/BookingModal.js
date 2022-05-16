@@ -21,12 +21,12 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             treatment: name,
             date: formattedDate,
             slot,
-            patientEmail: user.email,
+            patientMail: user.email,
             patientName: user.displayName,
             phone: event.target.phone.value,
             age: event.target.age.value
         }
-        //its time to Fetch for SENT data to server for line:41 
+        //its time to Fetch for SENT data to server:line:33 
         fetch('http://localhost:5000/booking', {
             method: 'POST',
             headers: {
@@ -36,12 +36,20 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
         })
         .then(res => res.json())
         .then(data=> {
-            toast('Booking submit successful')
-            console.log(data)
+        //console.log(data)
+        //conditional displayed server:line:35
+        if (data.success) {
+         toast(`Appointment is set On: ${formattedDate} At ${slot}`)  
+        }
+        else{
+         toast.error(`You already have an Appointment On: ${data.booking?.date} At ${data.booking?.date.slot}`)  
+        }
+
         //for close modal
         setTreatment(null)
-       })
-    }
+       });
+       
+}
 
     return (
         <div>
@@ -53,8 +61,8 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
 
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-4 justify-items-center'>
                         <input type="text" value={format(date, 'PP')} disabled className="input input-bordered w-full max-w-xs" />
-                        <select name='slot' className="select select-secondary w-full max-w-xs">
-                        <option disabled selected>Pick your Ideal Slots</option>
+                        <select name='slot' className="select select-secondary w-full max-w-xs" required>
+                        <option selected disabled>Pick your Ideal Slots</option>
                             {
                                 slots.map((slot,index)=><option key={index} value={slot}>{slot}</option>)
                             }
@@ -62,10 +70,10 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                         <input value={user?.displayName || ''}
                         disabled type="text" name='name' className="input input-bordered w-full max-w-xs" />
                         <input value={user?.email || ''} disabled  type="email" name='email' className="input input-bordered w-full max-w-xs" />
-                        <input type="text" name='phone' placeholder="Current Phone Number" className="input input-bordered w-full max-w-xs" />
+                        <input type="text" name='phone' required  placeholder="Current Phone Number" className="input input-bordered w-full max-w-xs" />
                         <label>Your up-to-date Age </label>
-                        <input type="number" name='age'
-                        id='age' placeholder="Age" className="input input-bordered w-full max-w-xs" />
+                        <input type="number" name='age' required
+                        placeholder="Age" className="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="submit" className="btn w-ful btn-warning" />
                     </form>
                 </div>
