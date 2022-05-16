@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import loginBg from '../../assets/images/login.png';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
 import ErrorMassages from '../SHARED/ErrorMassages';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -19,7 +20,9 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit , getValues} = useForm();
+
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -33,7 +36,7 @@ const Login = () => {
             navigate(from, { replace: true });
         }
     }, [user, gUser, from, navigate]);
-    
+
 
     if ( gLoading) {
         return <Loading></Loading>
@@ -47,6 +50,18 @@ const Login = () => {
     const onSubmit = data => {
         console.log(data);
         signInWithEmailAndPassword(data.email, data.password);
+        console.log(data.email);
+    }
+        const handleReset = async ()=> {
+            const email = getValues('email')
+            console.log(email);
+        if (email) {
+            await sendPasswordResetEmail(email);
+            toast('Sent email Reset your Password!');
+        }
+        else{
+            toast('Please enter your email address!');
+        }
     }
 
     return (
@@ -106,11 +121,6 @@ const Login = () => {
                             </label>
                         </div>
 
-
-                        <label className="label">
-                            <button href=".." className="label-text-alt link link-hover link-white">Forgot password?</button>
-                        </label>
-
                         {signInError} 
                         { loading && <Loading></Loading>}
 
@@ -118,6 +128,9 @@ const Login = () => {
                             <input type="submit" value="Login" className="btn btn-primary text-white" />
                         </div>
                     </form>
+                    <label className="label">
+                            <button onClick={handleReset} className="label-text-alt link link-hover link-white">Forgot password?</button>
+                        </label>
                     <p><small>New to Doctors Portal? <Link className=' hover:underline font-bold' to="/signup">Create New Account</Link></small></p>
 
                     <div className="divider">OR</div>

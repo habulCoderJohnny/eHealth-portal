@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HelloUser = () => {
+const WelcomeUser = () => {
     return (
         <div className="alert shadow-lg">
   <div>
@@ -15,4 +15,4 @@ const HelloUser = () => {
     );
 };
 
-export default HelloUser;
+export default WelcomeUser;

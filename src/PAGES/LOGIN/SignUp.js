@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import loginBg from '../../assets/images/login.png';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
-import HelloUser from '../SHARED/HelloUser';
+import WelcomeUser from '../SHARED/WelcomeUser';
 import ErrorMassage from '../SHARED/ErrorMassage';
+import { toast } from 'react-toastify';
 
 
 const SignUp = () => {
@@ -18,7 +19,7 @@ const SignUp = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth,  {sendEmailVerification: true});
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
@@ -29,6 +30,12 @@ const SignUp = () => {
 
     let signInError;
 
+    useEffect( () =>{
+        if (user || gUser) {
+         return <WelcomeUser></WelcomeUser>;
+        }
+    }, [user, gUser]);
+
     if (gLoading || updating) {
         return <Loading></Loading>
     }
@@ -36,18 +43,17 @@ const SignUp = () => {
     if (error || gError || updateError) {
         signInError = <ErrorMassage>{error?.message || gError?.message || updateError.message}</ErrorMassage>
     }
-    
+
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
         console.log('user updated');
         navigate('/appointment');
+        if ({sendEmailVerification:true}) {
+            await toast('Sent email Verification mail check your inbox/spam!');
+        }
     }
-
-    if (user || gUser) {
-        return <HelloUser></HelloUser>;
-    }
-
+   
     return (
         <div className="hero min-h-screen" style={{ background: `url(${loginBg})`, backgroundSize: 'cover' }}>
             <div className="hero-overlay bg-opacity-10"></div>
