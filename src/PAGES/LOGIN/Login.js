@@ -73,13 +73,13 @@ const Login = () => {
                     <h1 className="text-white text-5xl font-bold ">Login now!</h1>
                 </div>
                 <div className="card-body">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} className="text-red-400">
                         <div className="form-control">
                             <label className="label p-1">
                                 <span className="label-text text-xl">Email</span>
                             </label>
 
-                            <input type="email" placeholder="email" className="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
+                            <input type="email" placeholder="email" className="input input-secondary text-xl"  {...register("email", {
                                 required: {
                                     value: true,
                                     message: 'Email is Required'
@@ -103,7 +103,7 @@ const Login = () => {
                                 <span className="label-text text-xl">Password</span>
                             </label>
 
-                            <input type="password" placeholder="password" className="input input-bordered input-secondary text-xl text-blue-400" {...register("password", {
+                            <input type="password" placeholder="password" className="input input-error text-xl" {...register("password", {
                                 required: {
                                     value: true,
                                     message: 'Password is Required'
@@ -125,7 +125,7 @@ const Login = () => {
                         { loading && <Loading></Loading>}
 
                         <div className="form-control">
-                            <input type="submit" value="Login" className="btn btn-primary text-white" />
+                            <input type="submit" value="Login" className="btn btn-primary text-white input-error" />
                         </div>
                     </form>
                     <label className="label">

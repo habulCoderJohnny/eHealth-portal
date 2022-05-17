@@ -8,6 +8,7 @@ import Loading from '../SHARED/Loading/Loading';
 import WelcomeUser from '../SHARED/WelcomeUser';
 import ErrorMassage from '../SHARED/ErrorMassage';
 import { toast } from 'react-toastify';
+import useToken from '../../HOOKS/useToken';
 
 
 const SignUp = () => {
@@ -24,6 +25,8 @@ const SignUp = () => {
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const [token] = useToken(user || gUser);
 
     const navigate = useNavigate();
     // console.log(user);
@@ -47,7 +50,7 @@ const SignUp = () => {
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
-        console.log( user, 'user updated');
+        console.log('user updated', user);
         navigate('/appointment');
         if ({sendEmailVerification:true}) {
             await toast('Sent email Verification mail check your inbox/spam!');
@@ -63,14 +66,13 @@ const SignUp = () => {
                     <h1 className="text-white text-5xl font-bold ">Sign Up now!</h1>
                 </div>
                 <div className="card-body">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} className="text-blue-600">
                         <div className="form-control">
                             <label className="label p-0">
                                 <span className="label-text text-xl">Name</span>
                             </label>
 
-                            <input type="text" placeholder="Name" className="input input-bordered input-secondary border-emerald-500  text-xl text-blue-400
-                            "  {...register("name", {
+                            <input type="text" placeholder="Name" className="input input-secondary   text-xl"  {...register("name", {
                                 required: {
                                     value: true,
                                     message: 'Name is Required'
@@ -90,7 +92,7 @@ const SignUp = () => {
                                 <span className="label-text text-xl">Email</span>
                             </label>
 
-                            <input type="email" placeholder="email" className="input input-bordered input-secondary text-xl text-blue-400"  {...register("email", {
+                            <input type="email" placeholder="email" className="input input-secondary text-xl" {...register("email", {
                                 required: {
                                     value: true,
                                     message: 'Email is Required'
@@ -114,7 +116,7 @@ const SignUp = () => {
                                 <span className="label-text text-xl">Password</span>
                             </label>
 
-                            <input type="password" placeholder="password" className="input input-bordered input-secondary  border-red-500 text-xl text-blue-400" {...register("password", {
+                            <input type="password" placeholder="password" className="input input-error text-xl" {...register("password", {
                                 required: {
                                     value: true,
                                     message: 'Password is Required'

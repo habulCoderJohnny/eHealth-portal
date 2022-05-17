@@ -30,7 +30,7 @@ const MyAppointments = () => {
     {/* <!-- head --> */}
     <thead className='text-primary'>
       <tr>
-        <th>Name</th>
+        <th>Avator | Name</th>
         <th>Date</th>
         <th>Schedule</th>
         <th>Treatment</th>
