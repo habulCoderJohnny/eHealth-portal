@@ -5,7 +5,7 @@ import auth from '../../firebase.init';
 import { toast } from 'react-toastify';
 
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
+const BookingModal = ({ treatment, date, setTreatment, refetch}) => {
     const { _id, name, slots } = treatment;
     const [user, loading] = useAuthState(auth);
     const formattedDate = format(date, 'PP');
@@ -44,7 +44,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
         else{
          toast.error(`You already have an Appointment On: ${data.booking?.date} At ${data.booking?.date.slot}`)  
         }
-
+        refetch();
         //for close modal
         setTreatment(null)
        });
@@ -71,9 +71,8 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                         disabled type="text" name='name' className="input input-bordered w-full max-w-xs" />
                         <input value={user?.email || ''} disabled  type="email" name='email' className="input input-bordered w-full max-w-xs" />
                         <input type="text" name='phone' required  placeholder="Current Phone Number" className="input input-bordered w-full max-w-xs" />
-                        <label>Your up-to-date Age </label>
                         <input type="number" name='age' required
-                        placeholder="Age" className="input input-bordered w-full max-w-xs" />
+                        placeholder="Your up-to-date Age" className="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="submit" className="btn w-ful btn-warning" />
                     </form>
                 </div>
