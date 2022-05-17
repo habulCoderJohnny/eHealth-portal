@@ -47,7 +47,7 @@ const SignUp = () => {
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
-        console.log('user updated');
+        console.log( user, 'user updated');
         navigate('/appointment');
         if ({sendEmailVerification:true}) {
             await toast('Sent email Verification mail check your inbox/spam!');
