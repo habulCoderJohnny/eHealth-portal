@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useToken = user =>{
-    const [token, useToken] = useState('');
+    const [token, setToken] = useState('');
     useEffect(()=>{
         //console.log('user inside token', user);
         const email = user?.user?.email;
@@ -18,6 +18,9 @@ const useToken = user =>{
             .then(res=>res.json())
             .then(data =>{
                 console.log('data inside usetoken', data);
+                const accessToken = data.token;
+                localStorage.setItem('accessToken', accessToken);
+                setToken(accessToken);
             })
 
         }

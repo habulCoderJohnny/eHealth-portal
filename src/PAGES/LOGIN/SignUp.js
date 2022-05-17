@@ -34,10 +34,11 @@ const SignUp = () => {
     let signInError;
 
     useEffect( () =>{
-        if (user || gUser) {
+        if (token) {
+         navigate('/dashboard');
          return <WelcomeUser></WelcomeUser>;
         }
-    }, [user, gUser]);
+    }, [token,navigate]);
 
     if (gLoading || updating) {
         return <Loading></Loading>
@@ -50,8 +51,7 @@ const SignUp = () => {
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
-        console.log('user updated', user);
-        navigate('/appointment');
+        console.log('user updated', user, gUser);
         if ({sendEmailVerification:true}) {
             await toast('Sent email Verification mail check your inbox/spam!');
         }
@@ -153,5 +153,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-

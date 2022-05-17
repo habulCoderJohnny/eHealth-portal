@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Loading from '../SHARED/Loading/Loading';
 import ErrorMassages from '../SHARED/ErrorMassages';
 import { toast } from 'react-toastify';
+import useToken from '../../HOOKS/useToken';
 
 
 const Login = () => {
@@ -29,13 +30,15 @@ const Login = () => {
     const from = location?.state?.from?.pathname || '/';
     console.log(user, gUser);
 
+    const token = useToken(user || gUser);
+
     let signInError;
 
     useEffect( () =>{
         if (user || gUser) {
             navigate(from, { replace: true });
         }
-    }, [user, gUser, from, navigate]);
+    }, [token, from, navigate]);
 
 
     if ( gLoading) {
@@ -73,7 +76,7 @@ const Login = () => {
                     <h1 className="text-white text-5xl font-bold ">Login now!</h1>
                 </div>
                 <div className="card-body">
-                    <form onSubmit={handleSubmit(onSubmit)} className="text-red-400">
+                    <form onSubmit={handleSubmit(onSubmit)} className="text-blue-600">
                         <div className="form-control">
                             <label className="label p-1">
                                 <span className="label-text text-xl">Email</span>
@@ -146,23 +149,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
