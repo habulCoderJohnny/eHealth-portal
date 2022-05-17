@@ -1,5 +1,7 @@
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../SHARED/Loading/Loading';
 
@@ -7,11 +9,30 @@ import Loading from '../SHARED/Loading/Loading';
 const MyAppointments = () => {
     const [appointments,setAppointments] = useState([]);
     const [user, loading] = useAuthState(auth);
+    const navigate = useNavigate();
     useEffect(()=>{
+      //SEND USER MAIL & localStorage accessToken for secure UserData TO SERVER || Token parameter sent 
         if (user) {
-            fetch(`http://localhost:5000/booking?patientMail=${user?.email}`)
-            .then(res=>res.json())
-            .then(data=>setAppointments(data))
+            fetch(`http://localhost:5000/booking?patientMail=${user?.email}`,{
+              method: 'GET',
+              headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+              }
+            })
+            //Handle unauthorized access || Showing Error
+            .then(res=>{ console.log('res:', res);
+            if (res.status ===401 || res.status ===403) {
+              signOut(auth);
+              localStorage.removeItem('accessToken');
+              navigate('/login')
+            }
+      
+              return res.json()
+            })
+            .then(data=>{
+              setAppointments(data);
+            })
         }
     },[user]);
         
