@@ -12,7 +12,7 @@ const UserRow = ({user,refetch}) => {
         })
         .then(res=> {
             if (res.status===403) {
-                toast.error('U are not an admin! so u cant')
+                toast.error('Without an admin! Let alone Add a admin')
             }
            return res.json()})
         .then(data =>{
