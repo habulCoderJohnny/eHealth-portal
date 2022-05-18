@@ -29,29 +29,29 @@ const UserRow = ({user,refetch}) => {
 
         <tr>
             <td>
-                <div class="flex items-center space-x-3">
+                <div className="flex items-center space-x-3">
                     {/* SELF CODING */}
-                    <div class="avatar">
+                    <div className="avatar">
 
                         {
-                            photoURL ? <div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 w-full"> <img src={photoURL} alt=".." />
-                            </div> : <div class="bg-primary-focus text-neutral-content rounded-full w-24 text-center"><br /><span class="text-base text-white font-bold block">{displayName}</span> </div>
+                            photoURL ? <div className="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 w-full"> <img src={photoURL} alt=".." />
+                            </div> : <div className="bg-primary-focus text-neutral-content rounded-full w-24 text-center"><br /><span className="text-base text-white font-bold block">{displayName}</span> </div>
                         }
 
                     </div>
                     <div>
-                        <div class="font-bold">{}</div>
-                        <div class="text-sm opacity-50">United States</div>
+                        <div className="font-bold">{}</div>
+                        <div className="text-sm opacity-50">United States</div>
                     </div>
                 </div>
             </td>
             <td>
                 {email}
                 <br />
-                <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
             </td>
-            <td>{Role!=='Admin' && <button onClick={makeAdmin} class="btn btn-warning btn-xs">Make Admin</button>}</td>
-            <td><button class="btn btn-error btn-xs">Remove user</button></td>
+            <td>{Role!=='Admin' && <button onClick={makeAdmin} className="btn btn-warning btn-xs">Make Admin</button>}</td>
+            <td><button className="btn btn-error btn-xs">Remove user</button></td>
         </tr>
     );
 };

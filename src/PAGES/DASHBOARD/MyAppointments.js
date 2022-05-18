@@ -46,8 +46,8 @@ const MyAppointments = () => {
             <h1>My Appointments: <span className='stat-value text-blue-400'> {appointments.length}</span></h1> <br />
 
 
-            <div class="overflow-x-auto w-full">
-  <table class="table w-full">
+            <div className="overflow-x-auto w-full">
+  <table className="table w-full">
     {/* <!-- head --> */}
     <thead className='text-primary'>
       <tr>
@@ -57,7 +57,7 @@ const MyAppointments = () => {
         <th>Treatment</th>
         <th>
           <label>
-            <input type="checkbox" class="checkbox" />
+            <input type="checkbox" className="checkbox" />
           </label>
         </th>
       </tr>
@@ -68,34 +68,33 @@ const MyAppointments = () => {
            appointments.map(a =>
             <tr>
             <td>
-              <div class="flex items-center space-x-3">
+              <div className="flex items-center space-x-3">
                 {/* SELF CODING */}
-                <div class="avatar">
-
+                <div className="avatar">
                     {
-                      user.photoURL ? <div class="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 w-full"> <img src= {user?.photoURL}  alt=".."/> 
-                      </div> : <div class="bg-primary-focus text-neutral-content rounded-full w-24 text-center"><br /><span class="text-base text-white font-bold block">{user?.displayName}</span> </div>
+                      user.photoURL ? <div className="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 w-full"> <img src= {user?.photoURL}  alt=".."/> 
+                      </div> : <div className="bg-primary-focus text-neutral-content rounded-full w-24 text-center"><br /><span className="text-base text-white font-bold block">{user?.displayName}</span> </div>
                     }
 
                 </div>
                 <div>
-                  <div class="font-bold">{a.patientName}</div>
-                  <div class="text-sm opacity-50">United States</div>
+                  <div className="font-bold">{a.patientName}</div>
+                  <div className="text-sm opacity-50">United States</div>
                 </div>
               </div>
             </td>
             <td>
               {a.date}
               <br />
-              <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+              <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
             </td>
             <td>{a.slot}</td>
             <th>
-              <button class="btn btn-ghost btn-xs">{a.treatment}</button>
+              <button className="btn btn-ghost btn-xs">{a.treatment}</button>
             </th>
             <th>
               <label>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </label>
             </th>
           </tr>)

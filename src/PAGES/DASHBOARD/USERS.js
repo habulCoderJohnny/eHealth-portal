@@ -20,8 +20,8 @@ const USERS = () => {
         <div>
             <h1>users length <span className='stat-value'>{allUsers.length}</span></h1>
 
-            <div class="overflow-x-auto w-full">
-                <table class="table w-full">
+            <div className="overflow-x-auto w-full">
+                <table className="table w-full">
                     {/* <!-- head --> */}
                     <thead className='text-primary'>
                         <tr>
