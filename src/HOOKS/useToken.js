@@ -8,7 +8,7 @@ const useToken = user =>{
         const currentUser = {email:email};
         //SEND BACKEND
         if (email) {
-            fetch(`http://localhost:5000/user/${email} `,{
+            fetch(`https://e-health-server.herokuapp.com/user/${email} `,{
                 method: 'PUT',
                 headers:{
                     'content-type': 'application/json'

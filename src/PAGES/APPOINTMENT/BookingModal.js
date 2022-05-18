@@ -27,7 +27,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch}) => {
             age: event.target.age.value
         }
         //its time to Fetch for SENT data to server:line:33 
-        fetch('http://localhost:5000/booking', {
+        fetch('https://e-health-server.herokuapp.com/booking', {
             method: 'POST',
             headers: {
                 'content-type' : 'application/json'

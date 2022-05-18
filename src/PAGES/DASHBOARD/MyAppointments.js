@@ -13,7 +13,7 @@ const MyAppointments = () => {
     useEffect(()=>{
       //SEND USER MAIL & localStorage accessToken for secure UserData TO SERVER || Token parameter sent 
         if (user) {
-            fetch(`http://localhost:5000/booking?patientMail=${user?.email}`,{
+            fetch(`https://e-health-server.herokuapp.com/booking?patientMail=${user?.email}`,{
               method: 'GET',
               headers: {
                 'content-type': 'application/json',

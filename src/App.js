@@ -28,7 +28,7 @@ function App() {
 
         {/* Nested Route */}
         <Route path="dashboard" element={
-          <Dashboard/>}>
+          <RequireAuth><Dashboard/></RequireAuth>}>
           <Route index element={<MyAppointments/>}></Route>
           <Route path="review" element={<MyReview />}></Route>
           <Route path="history" element={<MyHistory />}></Route>
