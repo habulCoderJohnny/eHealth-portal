@@ -5,17 +5,17 @@ import UserRow from './UserRow';
 
 const USERS = () => {
     //load all user from Database
-    const { data: allUsers, isLoading } = useQuery('users', () => fetch('http://localhost:5000/users',{
+    const { data: allUsers, isLoading, refetch } = useQuery('users', () => fetch('http://localhost:5000/users',{
         method: 'GET',
         headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
-    })
-        .then(res => res.json())
-    )
+    }).then(res => res.json()));
+    
     if (isLoading) {
         return Loading
     }
+    console.log(allUsers);
     return (
         <div>
             <h1>users length <span className='stat-value'>{allUsers.length}</span></h1>
@@ -33,7 +33,7 @@ const USERS = () => {
                     </thead>
                     <tbody>
                         {
-                            allUsers.map(user=><UserRow key={user._id} user={user}></UserRow>)
+                            allUsers.map(user=><UserRow key={user._id} user={user} refetch={refetch}></UserRow>)
                         }
                     </tbody>
                 </table>

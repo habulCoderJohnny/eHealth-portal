@@ -1,7 +1,30 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
-const UserRow = ({user}) => {
-    const {email,photoURL,displayName} = user;
+const UserRow = ({user,refetch}) => {
+    const {email,Role, photoURL,displayName} = user;
+    const makeAdmin = () =>{
+        fetch(`http://localhost:5000/user/admin/${email}`,{
+            method: 'PUT',
+            headers:{
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res=> {
+            if (res.status===403) {
+                toast.error('U are not an admin! so u cant')
+            }
+           return res.json()})
+        .then(data =>{
+            // console.log(data);
+            if (data.modifiedCount>0) {
+                refetch();
+                toast.success(`Successfully made an admin!`);
+            }
+            
+        })
+
+    }
     return (
 
         <tr>
@@ -27,7 +50,7 @@ const UserRow = ({user}) => {
                 <br />
                 <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
             </td>
-            <td><button class="btn btn-warning btn-xs">Make Admin</button></td>
+            <td>{Role!=='Admin' && <button onClick={makeAdmin} class="btn btn-warning btn-xs">Make Admin</button>}</td>
             <td><button class="btn btn-error btn-xs">Remove user</button></td>
         </tr>
     );
