@@ -1,14 +1,19 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserDoctor, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import Loading from '../SHARED/Loading/Loading';
 
 const AddDoctor = () => {
-
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/service').then(res => res.json()))
 
     const onSubmit = async data => {
-        console.log('doctor added');
+        console.log('form data', data);
+    }
+    if (isLoading) {
+        return <Loading></Loading>
     }
 
     const doctorIcon = <FontAwesomeIcon className='min-h-full' icon={faUserDoctor} />
@@ -36,8 +41,6 @@ const AddDoctor = () => {
                     </label>
                 </div>
 
-
-
                 <div className="form-control">
                     <label className="label p-1">
                         <span className="label-text text-xl">Email</span>
@@ -64,20 +67,33 @@ const AddDoctor = () => {
 
                 <div className="form-control">
                     <label className="label p-1">
-                        <span className="label-text text-xl">specialty</span>
+                        <span className="label-text text-xl">Select Specialty</span>
+                    </label>
+                    <select {...register("specialty")} class="select select-warning ">
+                        {
+                            services.map(s=><option key={s._id} value={s.name}>{s.name}</option>)
+                        }
+                    </select>
+                </div>
+
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text text-xl">Photo</span>
                     </label>
 
-                    <input type="text" placeholder="specialty" className="input input-warning text-xl" {...register("specialty", {
+                    <input type="file" className="input input-primary pt-1"  {...register("img", {
                         required: {
                             value: true,
-                            message: 'This field is Required'
+                            message: 'Image is Required'
                         }
                     })} />
 
-                    <label className="label">
-                        {errors.specialty?.type === 'required' && <span className="label-text-alt text-red-500">{errors.specialty.message}</span>}
+
+                    <label className="label p-1">
+                        {errors.img?.type === 'required' && <span className="label-text-alt text-red-500">{errors.img.message}</span>}
                     </label>
                 </div>
+
                 <div className="form-control">
                     <button type="submit"
                         className="btn btn-primary text-white">{doctorIcon}{plusIcon}</button>
