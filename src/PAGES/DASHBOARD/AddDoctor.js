@@ -4,17 +4,62 @@ import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserDoctor, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import Loading from '../SHARED/Loading/Loading';
+import { toast } from 'react-toastify';
 
 const AddDoctor = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit,reset } = useForm();
     const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/service').then(res => res.json()))
 
+    const imgStorageKey = 'c2bea01b598a44c1d5794b15a892a262';
+
     const onSubmit = async data => {
-        console.log('form data', data);
+        //user inputted img stored to a third party server
+        console.log('form:', data);
+        const inputImg = data.image[0];
+        const formData = new FormData(); 
+        formData.append('image', inputImg);
+        const url = `https://api.imgbb.com/1/upload?key=${imgStorageKey}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res=>res.json())
+        .then(result =>{
+            console.log('imgbb', result);
+            if (result.success) {
+                const image = result.data.url;
+                const doctor = {
+                    name: data.name,
+                    email: data.email,
+                    specialty: data.specialty,
+                    image: image
+                } 
+                //SEND TO DATABASE
+                fetch('http://localhost:5000/doctor',{
+                    method: 'POST',
+                    headers:{'content-type': 'application/json',    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(doctor)
+                })
+                .then(res=>res.json())
+                .then(inserted =>{
+                    console.log('doctor image sent',inserted);
+                    if (inserted.insertedId) {
+                        toast.success('Doctor added successfully')
+                        reset();
+                    }
+                    else{
+                        toast.error('Doctor adding failed try later!')
+                    }
+                })
+            }
+        })
+
     }
     if (isLoading) {
         return <Loading></Loading>
     }
+    
 
     const doctorIcon = <FontAwesomeIcon className='min-h-full' icon={faUserDoctor} />
     const plusIcon = <FontAwesomeIcon className='min-h-lg' icon={faPlusCircle} />
@@ -69,7 +114,7 @@ const AddDoctor = () => {
                     <label className="label p-1">
                         <span className="label-text text-xl">Select Specialty</span>
                     </label>
-                    <select {...register("specialty")} class="select select-warning ">
+                    <select {...register("specialty")} class="select select-warning">
                         {
                             services.map(s=><option key={s._id} value={s.name}>{s.name}</option>)
                         }
@@ -81,7 +126,7 @@ const AddDoctor = () => {
                         <span className="label-text text-xl">Photo</span>
                     </label>
 
-                    <input type="file" className="input input-primary pt-1"  {...register("img", {
+                    <input type="file" className="input input-bordered pt-1" {...register("image", {
                         required: {
                             value: true,
                             message: 'Image is Required'
@@ -90,7 +135,7 @@ const AddDoctor = () => {
 
 
                     <label className="label p-1">
-                        {errors.img?.type === 'required' && <span className="label-text-alt text-red-500">{errors.img.message}</span>}
+                        {errors.image?.type === 'required' && <span className="label-text-alt text-red-500">{errors.image.message}</span>}
                     </label>
                 </div>
 
@@ -104,3 +149,12 @@ const AddDoctor = () => {
 };
 
 export default AddDoctor;
+
+/**
+     * 3 WAY TO STORE IMG
+     * 1. Third party storage //Free open public storage is ok for Practice project 
+     * 2. Your own storage in your own server (file system)
+     * 3. Database: Mongodb 
+     * 
+     * YUP: to validate file: Search: Yup file validation for react hook form
+*/
