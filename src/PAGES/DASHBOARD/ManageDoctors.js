@@ -23,16 +23,18 @@ const ManageDoctors = () => {
                     {/* <!-- head --> */}
                     <thead className='text-primary'>
                         <tr>
+                            <th></th>
                             <th>Avator</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Specialty</th>
-                            <th>Action</th>
+                            <th>Like</th>
+                            <th>Dislike</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            doctors.map(doctor=><DoctorRow key={doctor._id} doctor={doctor} refetch={refetch}></DoctorRow>)
+                            doctors.map((doctor,index)=><DoctorRow key={doctor._key} doctor={doctor} index={index} refetch={refetch}></DoctorRow>)
                         }
                     </tbody>
                 </table>

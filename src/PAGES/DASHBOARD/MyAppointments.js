@@ -52,6 +52,7 @@ const MyAppointments = () => {
           {/* <!-- head --> */}
           <thead className='text-primary'>
             <tr>
+              <th></th>
               <th>Avator</th>
               <th>Name</th>
               <th>Date</th>
@@ -67,8 +68,9 @@ const MyAppointments = () => {
           <tbody>
 
             {
-              appointments.map(a =>
+              appointments.map((a, index) => 
                 <tr>
+                  <th>{index+1}</th>
                   <td>
                     <div className="flex items-center space-x-3">
                       {/* SELF CODING */}
