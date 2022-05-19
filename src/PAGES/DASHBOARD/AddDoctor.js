@@ -114,7 +114,7 @@ const AddDoctor = () => {
                     <label className="label p-1">
                         <span className="label-text text-xl">Select Specialty</span>
                     </label>
-                    <select {...register("specialty")} class="select select-warning">
+                    <select {...register("specialty")} className="select select-warning">
                         {
                             services.map(s=><option key={s._id} value={s.name}>{s.name}</option>)
                         }
