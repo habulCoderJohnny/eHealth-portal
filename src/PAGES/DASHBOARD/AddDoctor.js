@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserDoctor, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import Loading from '../SHARED/Loading/Loading';
 import { toast } from 'react-toastify';
+import doctorbg from '../../assets/images/add-doctorbg.png';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit,reset } = useForm();
@@ -64,7 +65,10 @@ const AddDoctor = () => {
     const doctorIcon = <FontAwesomeIcon className='min-h-full' icon={faUserDoctor} />
     const plusIcon = <FontAwesomeIcon className='min-h-lg' icon={faPlusCircle} />
     return (
-        <div>
+        <div className="hero min-full-screen bg-repeat-none" style={{ background: `url(${doctorbg})`, backgroundSize: 'cover' }}>
+        <div className="hero-overlay bg-opacity-70"></div>
+
+        <div className="card w-full max-w-lg shadow-2xl">
             <h1 className='text-center text-5xl'>Add a <small className='text-[#007C92]'>Doctor</small></h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md mx-auto text-blue-600">
@@ -141,9 +145,10 @@ const AddDoctor = () => {
 
                 <div className="form-control">
                     <button type="submit"
-                        className="btn btn-primary text-white">{doctorIcon}{plusIcon}</button>
+                        className="btn btn-primary text-white">{doctorIcon}{plusIcon}</button> <br />
                 </div>
             </form>
+        </div>
         </div>
     );
 };
