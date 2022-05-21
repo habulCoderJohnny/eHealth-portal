@@ -27,3 +27,4 @@ firebase.init.js
 .firebase/hosting.YnVpbGQ.cache
 firebase.json
 Login2.js
+__payment_steps.js

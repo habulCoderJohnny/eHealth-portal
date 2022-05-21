@@ -1,7 +1,9 @@
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../SHARED/Loading/Loading';
 
@@ -58,18 +60,14 @@ const MyAppointments = () => {
               <th>Date</th>
               <th>Schedule</th>
               <th>Treatment</th>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
+              <th>Payment Status</th>
             </tr>
           </thead>
           <tbody>
 
             {
               appointments.map((a, index) => 
-                <tr>
+                <tr key={a._id}>
                   <th>{index+1}</th>
                   <td>
                     <div className="flex items-center space-x-3">
@@ -97,13 +95,17 @@ const MyAppointments = () => {
                   </td>
                   <td>{a.slot}</td>
                   <th>
-                    <button className="btn btn-ghost btn-xs">{a.treatment}</button>
+                  <button className="btn btn-ghost btn-xs">{a.treatment}</button>
                   </th>
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
+                  <td>{(a.price && !a.paid ) && <Link to={`/dashboard/payment/${a._id}`}>
+                    <button className="btn btn-warning btn-xs">Plz Pay</button>
+                    </Link>}
+                  {(a.price && a.paid ) && 
+                   <div>
+                      <p className='stat-value text-green-500 text-xl'><FontAwesomeIcon icon={faCheckCircle}></FontAwesomeIcon> PAID</p>
+                      <abbr className='text-green-500' title={a.transactionId}>Transaction id</abbr> 
+                   </div>}
+                   </td>
                 </tr>)
             }
           </tbody>

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 
 const BookingModal = ({ treatment, date, setTreatment, refetch}) => {
-    const { _id, name, slots } = treatment;
+    const { _id, name, slots, price} = treatment;
     const [user, loading] = useAuthState(auth);
     const formattedDate = format(date, 'PP');
 
@@ -21,6 +21,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch}) => {
             treatment: name,
             date: formattedDate,
             slot,
+            price,
             patientMail: user.email,
             patientName: user.displayName,
             phone: event.target.phone.value,
@@ -57,7 +58,8 @@ const BookingModal = ({ treatment, date, setTreatment, refetch}) => {
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     <label htmlFor="booking-modal" className="btn btn-warning btn-sm btn-circle absolute right-8 top-5">✕</label>
-                    <h3 className="font-bold text-lg text-secondary text-center">Booking for {name}</h3>
+                    <h3 className="font-bold text-lg text-secondary text-center">Booking for {name} 
+                    <p className='stat-title'> Fee: ${price}</p></h3>                         
 
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-4 justify-items-center'>
                         <input type="text" value={format(date, 'PP')} disabled className="input input-bordered w-full max-w-xs" />
@@ -82,5 +84,3 @@ const BookingModal = ({ treatment, date, setTreatment, refetch}) => {
 };
 
 export default BookingModal;
-
-
