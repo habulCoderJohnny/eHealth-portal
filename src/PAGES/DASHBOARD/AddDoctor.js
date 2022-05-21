@@ -9,7 +9,7 @@ import doctorbg from '../../assets/images/add-doctorbg.png';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit,reset } = useForm();
-    const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/service').then(res => res.json()))
+    const { data: services, isLoading } = useQuery('services', () => fetch('https://e-health-server.herokuapp.com/service').then(res => res.json()))
 
     const imgStorageKey = 'c2bea01b598a44c1d5794b15a892a262';
 
@@ -36,7 +36,7 @@ const AddDoctor = () => {
                     image: image
                 } 
                 //SEND TO DATABASE
-                fetch('http://localhost:5000/doctor',{
+                fetch('https://e-health-server.herokuapp.com/doctor',{
                     method: 'POST',
                     headers:{'content-type': 'application/json',    authorization: `Bearer ${localStorage.getItem('accessToken')}`
                     },

@@ -7,7 +7,7 @@ const DoctorRow = ({ doctor, index,refetch }) => {
     const handleDelete = email =>{
         const confirm = window.confirm(`Are you sure to Delete Doctor: ${name}`);
         if (confirm) {
-        fetch(`http://localhost:5000/doctor/${email}`,{
+        fetch(`https://e-health-server.herokuapp.com/doctor/${email}`,{
             method: 'DELETE',
             headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`

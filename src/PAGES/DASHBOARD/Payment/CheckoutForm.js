@@ -19,7 +19,7 @@ const CheckoutForm = ({ bookingInfo }) => {
     const { _id, price, patientName, patientMail } = bookingInfo;
 
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://e-health-server.herokuapp.com/create-payment-intent', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -93,7 +93,7 @@ const CheckoutForm = ({ bookingInfo }) => {
                 appointmentId : _id,
                 transactionId: paymentIntent.id
             }
-            fetch(`http://localhost:5000/booking/${_id}`, {
+            fetch(`https://e-health-server.herokuapp.com/booking/${_id}`, {
                 method: 'PATCH',
                 headers: {
                 'content-type': 'application/json',
@@ -131,7 +131,7 @@ const CheckoutForm = ({ bookingInfo }) => {
                         },
                     }}
                 />
-                <button className='btn btn-success btn-sm mt-4 text-white' type="submit" disabled={!stripe || !clientSecret}>
+                <button className='btn btn-success btn-sm mt-4 text-white' type="submit" disabled={!stripe || !clientSecret || success}>
                     Pay
                 </button>
             </form>
